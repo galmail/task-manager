@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import useFetchTasks from "../hooks/useFetchTasks";
-import type { Task } from "../data/types";
+import "./task-list.scss";
+import useFetchTasks from "../../hooks/useFetchTasks";
+import type { Task } from "../../data/types";
 
 function TaskList() {
   const { tasks, loading, error } = useFetchTasks();
@@ -18,8 +19,9 @@ function TaskList() {
       <h1>Tasks</h1>
       <ul>
         {tasks.map((task: Task) => (
-          <li key={task.id}>
+          <li className="task" key={task.id}>
             <Link to={`/tasks/${task.id}`}>
+              <span className={`icon icon--${task.type}`}></span>
               <span>{task.name}</span>
             </Link>
           </li>

@@ -1,5 +1,6 @@
 export interface Task {
-  id: string;
+  id: number;
   name: string;
   description: string;
+  type: "general" | "hydration" | "medication" | "nutrition";
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import type { Task } from "../data/types";
+import type { Task } from "../../data/types";
 
 function TaskDetails() {
   const task: Task = {
-    id: "1",
+    id: 1,
     name: "task1",
     description: "desc1",
+    type: "general",
   };
 
   const handleDelete = () => {};

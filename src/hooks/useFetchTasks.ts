@@ -8,6 +8,7 @@ export default function useFetchTasks() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    console.log("*** useFetchTasks");
     setLoading(true);
     fetchTasks()
       .then((data) => {

@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./task-list.scss";
-import useFetchTasks from "../../hooks/useFetchTasks";
 import type { Task } from "../../data/types";
 
-function TaskList() {
-  const { tasks, loading, error } = useFetchTasks();
+type TaskListProps = {
+  tasks: Task[];
+};
 
-  if (error) {
-    return <div>Error loading tasks</div>;
-  } else if (loading) {
-    return <div>Loading tasks...</div>;
-  } else if (!tasks || tasks.length === 0) {
-    return <div>There are no tasks available</div>;
-  }
+function TaskList({ tasks }: TaskListProps) {
   return (
     <div>
       <h1>Tasks</h1>
       <ul>
         {tasks.map((task: Task) => (
           <li className="task" key={task.id}>
-            <Link to={`/tasks/${task.id}`}>
+            <Link to={`/tasks/${task.id}`} state={task}>
               <span className={`icon icon--${task.type}`}></span>
               <span>{task.name}</span>
             </Link>

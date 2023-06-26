@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import type { Task } from "../../data/types";
 
-function TaskDetails() {
-  const task: Task = {
-    id: 1,
-    name: "task1",
-    description: "desc1",
-    type: "general",
-  };
+type TaskDetailsProps = {
+  tasks: Task[];
+};
+
+function TaskDetails({ tasks }: TaskDetailsProps) {
+  const { id } = useParams();
+  const task = tasks.find((t) => t.id === Number(id));
 
   const handleDelete = () => {};
 
   const handleEdit = () => {};
 
-  return (
+  return task ? (
     <div>
       <h2>{task.name}</h2>
       <p>{task.description}</p>
@@ -21,6 +22,8 @@ function TaskDetails() {
       &nbsp;&nbsp;
       <button onClick={handleDelete}>Delete</button>
     </div>
+  ) : (
+    <div>There is no task with id {id}</div>
   );
 }
 

@@ -42,6 +42,7 @@ function TaskList({ tasks }: TaskListProps) {
         value={searchTerm}
         onChange={handleSearchChange}
         placeholder="Search tasks..."
+        data-testid="tasks-search-input"
       />
       <ul>
         {filteredTasks.map((task: Task) => (

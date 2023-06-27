@@ -5,9 +5,9 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import { useFetchTasks } from "./hooks";
 import TaskList from "./components/TaskList";
 import TaskDetails from "./components/TaskDetails";
-import useFetchTasks from "./hooks/useFetchTasks";
 
 function App() {
   const { tasks, loading, error } = useFetchTasks();

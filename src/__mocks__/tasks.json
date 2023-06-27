@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Task 1",
+    "description": "Description 1",
+    "type": "general"
+  },
+  {
+    "id": 2,
+    "name": "Task 2",
+    "description": "Description 2",
+    "type": "hydration"
+  },
+  {
+    "id": 3,
+    "name": "Task 3",
+    "description": "Description 3",
+    "type": "medication"
+  }
+]

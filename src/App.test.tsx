@@ -1,9 +1,19 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock("./hooks/useFetchTasks", () => () => ({
+  tasks: [],
+  loading: false,
+  error: null,
+}));
+
+describe("App tests", () => {
+  test("no tasks available", () => {
+    render(<App />, { wrapper: BrowserRouter });
+    expect(
+      screen.getByText(/There are no tasks available/)
+    ).toBeInTheDocument();
+  });
 });

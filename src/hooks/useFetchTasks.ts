@@ -24,5 +24,5 @@ export default function useFetchTasks() {
       });
   }, []);
 
-  return { tasks, loading, error };
+  return { tasks, setTasks, loading, error };
 }

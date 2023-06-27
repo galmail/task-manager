@@ -8,9 +8,10 @@ import {
 import { useFetchTasks } from "./hooks";
 import TaskList from "./components/TaskList";
 import TaskDetails from "./components/TaskDetails";
+import type { Task } from "./data/types";
 
 function App() {
-  const { tasks, loading, error } = useFetchTasks();
+  const { tasks, setTasks, loading, error } = useFetchTasks();
 
   if (error) {
     return <div>Error loading tasks</div>;
@@ -20,12 +21,19 @@ function App() {
     return <div>There are no tasks available</div>;
   }
 
+  const handleEditTask = (task: Task) => {
+    setTasks((tasks) => tasks.map((t) => (t.id === task.id ? task : t)));
+  };
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/tasks" />} />
         <Route path="/tasks" element={<TaskList tasks={tasks} />} />
-        <Route path="/tasks/:id" element={<TaskDetails tasks={tasks} />} />
+        <Route
+          path="/tasks/:id"
+          element={<TaskDetails tasks={tasks} onEdit={handleEditTask} />}
+        />
         <Route path="*" element={<div>Page not found</div>} />
       </Routes>
     </Router>

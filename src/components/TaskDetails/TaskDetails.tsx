@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import type { Task } from "../../data/types";
 import "./task-details.scss";
 
 type TaskDetailsProps = {
   tasks: Task[];
   onEdit: (t: Task) => void;
+  onDelete: (t: Task) => void;
 };
 
-function TaskDetails({ tasks, onEdit }: TaskDetailsProps) {
+function TaskDetails({ tasks, onEdit, onDelete }: TaskDetailsProps) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const task = tasks.find((t) => t.id === Number(id));
   const [editingTask, setEditingTask] = useState(false);
   const [name, setName] = useState(task?.name || "");
   const [description, setDescription] = useState(task?.description || "");
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    onDelete(task!);
+    navigate("/tasks");
+  };
 
   const handleEdit = () => {
     if (editingTask) {

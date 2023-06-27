@@ -13,7 +13,7 @@ describe("TaskDetails tests", () => {
   const tasks = tasksData as Task[];
 
   test("renders task details", () => {
-    render(<TaskDetails tasks={tasks} onEdit={jest.fn} />);
+    render(<TaskDetails tasks={tasks} onEdit={jest.fn} onDelete={jest.fn} />);
     const taskName = screen.getByText(/Task 1/);
     const taskDescription = screen.getByText(/Description 1/);
     expect(taskName).toBeInTheDocument();

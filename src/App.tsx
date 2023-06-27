@@ -25,6 +25,10 @@ function App() {
     setTasks((tasks) => tasks.map((t) => (t.id === task.id ? task : t)));
   };
 
+  const handleDeleteTask = (task: Task) => {
+    setTasks((tasks) => tasks.filter((t) => t.id !== task.id));
+  };
+
   return (
     <Router>
       <Routes>
@@ -32,7 +36,13 @@ function App() {
         <Route path="/tasks" element={<TaskList tasks={tasks} />} />
         <Route
           path="/tasks/:id"
-          element={<TaskDetails tasks={tasks} onEdit={handleEditTask} />}
+          element={
+            <TaskDetails
+              tasks={tasks}
+              onEdit={handleEditTask}
+              onDelete={handleDeleteTask}
+            />
+          }
         />
         <Route path="*" element={<div>Page not found</div>} />
       </Routes>

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import "./task-list.scss";
 import type { Task } from "../../data/types";
+import TopBar from "../TopBar";
+import Search from "../Search";
+import ListWithIcons from "../ListWithIcons";
 
 type TaskListProps = {
   tasks: Task[];
@@ -35,26 +38,28 @@ function TaskList({ tasks }: TaskListProps) {
   };
 
   return (
-    <div>
-      <h1>Tasks</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearchChange}
-        placeholder="Search tasks..."
-        data-testid="tasks-search-input"
+    <>
+      <TopBar title="Tasks">
+        <Search
+          placeholder="search tasks..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          data-testid="tasks-search-input"
+        />
+      </TopBar>
+      <ListWithIcons
+        className="task-list"
+        list={filteredTasks.map((task) => ({
+          ...task,
+          url: `/tasks/${task.id}`,
+          icon: {
+            name: task.type,
+            url: `/assets/icons/${task.type}.png`,
+          },
+        }))}
+        emptyList={<div>No tasks found</div>}
       />
-      <ul>
-        {filteredTasks.map((task: Task) => (
-          <li className="task" key={task.id}>
-            <Link to={`/tasks/${task.id}`} state={task}>
-              <span className={`icon icon--${task.type}`}></span>
-              <span>{task.name}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </>
   );
 }
 

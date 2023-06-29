@@ -1,23 +1,6 @@
-.task {
-  margin: 10px 0;
-  list-style-type: none;
-
-  .icon {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-    &--general {
-      background-image: url("../../assets/icons/general.png");
-    }
-    &--hydration {
-      background-image: url("../../assets/icons/hydration.png");
-    }
-    &--medication {
-      background-image: url("../../assets/icons/medication.png");
-    }
-    &--nutrition {
-      background-image: url("../../assets/icons/nutrition.png");
-    }
+.task-list {
+  a {
+    color: unset;
+    text-decoration: unset;
   }
 }

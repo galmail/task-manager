@@ -48,7 +48,7 @@ function TaskDetails({ tasks, onEdit, onDelete }: TaskDetailsProps) {
 
   return task ? (
     <>
-      <TopBar title="Task Details" goBack={() => navigate("/tasks")} />
+      <TopBar title="Task Details" goBack={() => navigate(-1)} />
       <div className="task-details">
         {editingTask ? (
           <Stack direction="column" spacing={2} mt={1}>
@@ -99,16 +99,6 @@ function TaskDetails({ tasks, onEdit, onDelete }: TaskDetailsProps) {
             Delete
           </Button>
         </Stack>
-
-        {/* <div className="action-buttons">
-        <button onClick={handleEdit} disabled={!name || !description}>
-          {editingTask ? "Save" : "Edit"}
-        </button>
-        &nbsp;&nbsp;
-        <button onClick={handleDelete} disabled={editingTask}>
-          Delete
-        </button>
-      </div> */}
       </div>
     </>
   ) : (

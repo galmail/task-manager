@@ -1,4 +1,4 @@
-enum TaskType {
+export enum TaskType {
   GENERAL = "general",
   HYDRATION = "hydration",
   MEDICATION = "medication",

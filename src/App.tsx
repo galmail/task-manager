@@ -1,53 +1,88 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
   Navigate,
+  createBrowserRouter,
+  RouterProvider,
 } from "react-router-dom";
-import { useFetchTasks } from "./hooks";
-import TaskList from "./components/TaskList";
-import TaskDetails from "./components/TaskDetails";
 import type { Task } from "./data/types";
+import TaskDetailsPage from "./pages/TaskDetailsPage/TaskDetailsPage";
+import TaskListPage from "./pages/TaskListPage/TaskListPage";
+import { fetchTasks } from "./data/api";
 
 function App() {
-  const { tasks, setTasks, loading, error } = useFetchTasks();
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const loadTasks = () => {
+    setLoading(true);
+    return fetchTasks()
+      .then((data) => {
+        setTasks(data);
+        setError(null);
+      })
+      .catch((error) => {
+        setError(error);
+        console.error("Error fetching tasks:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   if (error) {
     return <div>Error loading tasks</div>;
   } else if (loading) {
-    return <div>Loading tasks...</div>;
-  } else if (!tasks || tasks.length === 0) {
-    return <div>There are no tasks available</div>;
+    return <div>Loading...</div>;
   }
 
-  const handleEditTask = (task: Task) => {
-    setTasks((tasks) => tasks.map((t) => (t.id === task.id ? task : t)));
+  const handleEditTask = (updatedTask: Task) => {
+    setTasks((tasks) =>
+      tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    );
   };
 
-  const handleDeleteTask = (task: Task) => {
-    setTasks((tasks) => tasks.filter((t) => t.id !== task.id));
+  const handleDeleteTask = (taskToDelete: Task) => {
+    setTasks((tasks) => tasks.filter((task) => task.id !== taskToDelete.id));
   };
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/tasks" />} />
-        <Route path="/tasks" element={<TaskList tasks={tasks} />} />
-        <Route
-          path="/tasks/:id"
-          element={
-            <TaskDetails
-              tasks={tasks}
-              onEdit={handleEditTask}
-              onDelete={handleDeleteTask}
+  const router = createBrowserRouter([
+    {
+      children: [
+        {
+          path: "/",
+          element: <Navigate to="/tasks" />,
+        },
+        {
+          path: "/tasks",
+          element: <TaskListPage />,
+          loader: async () => {
+            if (tasks.length === 0) await loadTasks();
+            return tasks;
+          },
+        },
+        {
+          path: "/tasks/:id",
+          element: (
+            <TaskDetailsPage
+              onEditTask={handleEditTask}
+              onDeleteTask={handleDeleteTask}
             />
-          }
-        />
-        <Route path="*" element={<div>Page not found</div>} />
-      </Routes>
-    </Router>
-  );
+          ),
+          loader: async ({ params }) => {
+            if (tasks.length === 0) await loadTasks();
+            return tasks.find((task) => String(task.id) === params.id);
+          },
+        },
+        {
+          path: "*",
+          element: <div>Page not found</div>,
+        },
+      ],
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

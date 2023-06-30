@@ -30,7 +30,7 @@ function ListWithIcons({ list, className, emptyList }: ListWithIconsProps) {
   return list.length > 0 ? (
     <List className={className}>
       {list.map((item, index) => (
-        <Link to={item.url} key={`item-${item.id}`}>
+        <Link to={item.url} state={{ data: item }} key={`item-${item.id}`}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt={item.icon.name} src={item.icon.url} />

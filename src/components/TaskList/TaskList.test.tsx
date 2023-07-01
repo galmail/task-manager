@@ -1,51 +1,32 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
 // eslint-disable-next-line jest/no-mocks-import
 import tasksData from "../../__mocks__/tasks.json";
-import type { Task } from "../../data/types";
+import { TaskType, type Task } from "../../data/types";
 import TaskList from "./TaskList";
+
+jest.mock("react-router-dom", () => ({
+  // ...(jest.requireActual("react-router-dom") as any),
+  Link: (props: { to: string; children: ReactNode }) => (
+    <a href={props.to}>{props.children}</a>
+  ),
+}));
 
 describe("TaskList tests", () => {
   const tasks = tasksData as Task[];
 
-  test("renders task list", () => {
-    render(
-      <MemoryRouter initialEntries={["/tasks"]}>
-        <Routes>
-          <Route path="/tasks" element={<TaskList tasks={tasks} />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    const taskName1 = screen.getByText(/Task 1/);
-    const taskName2 = screen.getByText(/Task 2/);
-
-    expect(taskName1).toBeInTheDocument();
-    expect(taskName2).toBeInTheDocument();
+  it("renders task list", () => {
+    render(<TaskList tasks={tasks} />);
+    expect(screen.getByText(/Task 1/)).toBeInTheDocument();
+    expect(screen.getByText(/Description 1/)).toBeInTheDocument();
+    expect(screen.getByText(/Task 2/)).toBeInTheDocument();
+    expect(screen.getByText(/Description 2/)).toBeInTheDocument();
+    expect(screen.getByText(/Task 3/)).toBeInTheDocument();
+    expect(screen.getByAltText(TaskType.MEDICATION)).toBeInTheDocument();
   });
 
-  test("renders filtered tasks when loaded", () => {
-    const query = "task 3";
-    render(
-      <MemoryRouter initialEntries={[`/tasks?q=${query}`]}>
-        <Routes>
-          <Route path="/tasks" element={<TaskList tasks={tasks} />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    const taskName1 = screen.queryByText(/Task 1/);
-    const taskName2 = screen.queryByText(/Task 2/);
-    const taskName3 = screen.queryByText(/Task 3/);
-
-    const searchInput = screen.getByTestId(
-      "tasks-search-input"
-    ) as HTMLInputElement;
-
-    expect(taskName1).not.toBeInTheDocument();
-    expect(taskName2).not.toBeInTheDocument();
-    expect(taskName3).toBeInTheDocument();
-    expect(searchInput.value).toBe(query);
+  it("renders no tasks found message when tasks=0", () => {
+    render(<TaskList tasks={[]} />);
+    expect(screen.getByText(/No Tasks Found/)).toBeInTheDocument();
   });
 });

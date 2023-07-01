@@ -1,13 +1,7 @@
 import React, { useState } from "react";
+import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 import type { Task } from "../../data/types";
-
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-
 import "./task-details.scss";
 
 type TaskDetailsProps = {
@@ -40,19 +34,21 @@ function TaskDetails({ task, onEdit, onDelete }: TaskDetailsProps) {
         <Stack direction="column" spacing={2} mt={1}>
           <TextField
             required
-            id="outlined-required"
+            id="task-name"
             label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            inputProps={{ "data-testid": "task-name" }}
           />
           <TextField
-            id="filled-textarea"
+            id="task-description"
             label="Description"
-            placeholder="Placeholder"
+            placeholder="Task Description"
             multiline
             variant="filled"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            inputProps={{ "data-testid": "task-description" }}
           />
         </Stack>
       ) : (
@@ -68,6 +64,7 @@ function TaskDetails({ task, onEdit, onDelete }: TaskDetailsProps) {
 
       <Stack direction="row" spacing={2} mt={1}>
         <Button
+          data-testid="edit-button"
           onClick={handleEdit}
           disabled={!name || !description}
           variant="outlined"
@@ -76,6 +73,7 @@ function TaskDetails({ task, onEdit, onDelete }: TaskDetailsProps) {
           {editingTask ? "Save" : "Edit"}
         </Button>
         <Button
+          data-testid="delete-button"
           onClick={handleDelete}
           disabled={editingTask}
           color="warning"

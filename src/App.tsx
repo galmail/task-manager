@@ -50,9 +50,7 @@ function App() {
         {
           path: "/tasks",
           element: <TaskListPage />,
-          loader: async () => {
-            return tasks;
-          },
+          loader: async () => tasks,
         },
         {
           path: "/tasks/:id",
@@ -62,9 +60,8 @@ function App() {
               onDeleteTask={handleDeleteTask}
             />
           ),
-          loader: async ({ params }) => {
-            return tasks.find((task) => String(task.id) === params.id);
-          },
+          loader: async ({ params }) =>
+            tasks.find((task) => String(task.id) === params.id),
         },
         {
           path: "*",

@@ -1,6 +1,6 @@
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import InputBase, { InputBaseProps } from "@mui/material/InputBase";
+import { InputBase, InputBaseProps } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 function Search(searchInputProps: InputBaseProps) {
@@ -10,7 +10,10 @@ function Search(searchInputProps: InputBaseProps) {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        inputProps={{ "aria-label": "search" }}
+        inputProps={{
+          "aria-label": "search",
+          "data-testid": "search-input",
+        }}
         {...searchInputProps}
       />
     </SearchInput>

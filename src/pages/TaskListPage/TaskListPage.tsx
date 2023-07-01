@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useLoaderData } from "react-router-dom";
-import type { Task } from "../../data/types";
 import TaskList from "../../components/TaskList";
 import TopBar from "../../components/TopBar";
 import Search from "../../components/Search";
+import type { Task } from "../../data/types";
 
 function TaskListPage() {
   const tasks = useLoaderData() as Task[];

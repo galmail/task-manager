@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Navigate,
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import type { Task } from "./data/types";
 import TaskDetailsPage from "./pages/TaskDetailsPage/TaskDetailsPage";
 import TaskListPage from "./pages/TaskListPage/TaskListPage";
 import { fetchTasks } from "./data/api";
+import type { Task } from "./data/types";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const loadTasks = () => {
+  useEffect(() => {
     setLoading(true);
-    return fetchTasks()
+    fetchTasks()
       .then((data) => {
         setTasks(data);
         setError(null);
@@ -28,23 +28,17 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-  };
+  }, []);
 
-  if (error) {
-    return <div>Error loading tasks</div>;
-  } else if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  const handleEditTask = (updatedTask: Task) => {
+  const handleEditTask = useCallback((updatedTask: Task) => {
     setTasks((tasks) =>
       tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
     );
-  };
+  }, []);
 
-  const handleDeleteTask = (taskToDelete: Task) => {
+  const handleDeleteTask = useCallback((taskToDelete: Task) => {
     setTasks((tasks) => tasks.filter((task) => task.id !== taskToDelete.id));
-  };
+  }, []);
 
   const router = createBrowserRouter([
     {
@@ -57,7 +51,6 @@ function App() {
           path: "/tasks",
           element: <TaskListPage />,
           loader: async () => {
-            if (tasks.length === 0) await loadTasks();
             return tasks;
           },
         },
@@ -70,7 +63,6 @@ function App() {
             />
           ),
           loader: async ({ params }) => {
-            if (tasks.length === 0) await loadTasks();
             return tasks.find((task) => String(task.id) === params.id);
           },
         },
@@ -82,7 +74,13 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return error ? (
+    <div>Error loading tasks</div>
+  ) : loading ? (
+    <div>Loading...</div>
+  ) : (
+    <RouterProvider router={router} />
+  );
 }
 
 export default App;

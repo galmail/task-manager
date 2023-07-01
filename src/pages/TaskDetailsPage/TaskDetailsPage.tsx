@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import type { Task } from "../../data/types";
 import TaskDetails from "../../components/TaskDetails";
@@ -13,18 +13,21 @@ function TaskDetailsPage({ onEditTask, onDeleteTask }: TaskDetailsPageProps) {
   const navigate = useNavigate();
   const task = useLoaderData() as Task | null;
 
-  const handleEdit = (updatedTask: Task) => {
-    onEditTask(updatedTask);
-  };
+  const handleEdit = useCallback(
+    (updatedTask: Task) => {
+      onEditTask(updatedTask);
+    },
+    [onEditTask]
+  );
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     onDeleteTask(task!);
     navigate("/tasks");
-  };
+  }, [navigate, onDeleteTask, task]);
 
   return (
     <>
-      <TopBar title="Task Details" goBack={() => navigate(-1)} />
+      <TopBar title="Task Details" canGoBack={true} />
       {task ? (
         <TaskDetails task={task} onEdit={handleEdit} onDelete={handleDelete} />
       ) : (

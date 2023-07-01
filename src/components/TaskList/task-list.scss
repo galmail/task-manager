@@ -1,6 +1,17 @@
 .task-list {
-  a {
-    color: unset;
-    text-decoration: unset;
+  .task-item {
+    border-bottom: 1px solid lightgrey;
+    &:hover {
+      background-color: lightgrey;
+    }
+    .task-link {
+      color: unset;
+      text-decoration: unset;
+      display: flex;
+      align-items: flex-start;
+    }
+    .task-icon {
+      border-radius: 0;
+    }
   }
 }

@@ -1,24 +1,26 @@
 import React, { PropsWithChildren } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
+import { useNavigate } from "react-router-dom";
+import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 
 type TopBarProps = {
   title: string;
-  goBack?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  canGoBack?: boolean;
 };
 
-function TopBar({ title, goBack, children }: PropsWithChildren<TopBarProps>) {
+function TopBar({
+  title,
+  canGoBack,
+  children,
+}: PropsWithChildren<TopBarProps>) {
+  const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {goBack && (
+          {canGoBack && (
             <IconButton
-              onClick={goBack}
+              onClick={() => navigate(-1)}
               size="large"
               edge="start"
               color="inherit"

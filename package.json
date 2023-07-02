@@ -28,6 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:e2e": "cypress run --browser chrome --config specPattern='cypress/e2e/'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -54,6 +55,7 @@
     }
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "cypress": "^12.16.0"
   }
 }

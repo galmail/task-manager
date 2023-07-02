@@ -21,12 +21,8 @@ function TaskList({ tasks }: TaskListProps) {
       {tasks.map((task) => (
         <ListItem className="task-item" key={`item-${task.id}`}>
           <Link to={`/tasks/${task.id}`} className="task-link">
-            <ListItemAvatar>
-              <Avatar
-                alt={task.type}
-                src={`/assets/icons/${task.type}.png`}
-                className="task-icon"
-              />
+            <ListItemAvatar className="task-icon">
+              <Avatar alt={task.type} src={`/assets/icons/${task.type}.png`} />
             </ListItemAvatar>
             <ListItemText primary={task.name} secondary={task.description} />
           </Link>

@@ -8,10 +8,16 @@
       color: unset;
       text-decoration: unset;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
     }
     .task-icon {
-      border-radius: 0;
+      min-width: initial;
+      margin-right: 20px;
+      & > div {
+        border-radius: 0;
+        max-width: 24px;
+        max-height: 24px;
+      }
     }
   }
 }

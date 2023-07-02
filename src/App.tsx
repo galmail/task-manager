@@ -61,7 +61,7 @@ function App() {
             />
           ),
           loader: async ({ params }) =>
-            tasks.find((task) => String(task.id) === params.id),
+            tasks.find((task) => String(task.id) === params.id) ?? null,
         },
         {
           path: "*",

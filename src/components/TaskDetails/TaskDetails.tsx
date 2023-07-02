@@ -66,7 +66,7 @@ function TaskDetails({ task, onEdit, onDelete }: TaskDetailsProps) {
         <Button
           data-testid="edit-button"
           onClick={handleEdit}
-          disabled={!name || !description}
+          disabled={!name}
           variant="outlined"
           startIcon={<EditIcon />}
         >

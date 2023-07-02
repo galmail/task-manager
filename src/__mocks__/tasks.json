@@ -16,5 +16,10 @@
     "name": "Task 3",
     "description": "Description 3",
     "type": "medication"
+  },
+  {
+    "id": 4,
+    "name": "Task without a description",
+    "type": "general"
   }
 ]

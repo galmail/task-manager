@@ -17,7 +17,7 @@ function TaskListPage() {
       const filtered = tasks.filter(
         (task) =>
           task.name.toLowerCase().includes(query.toLowerCase()) ||
-          task.description.toLowerCase().includes(query.toLowerCase())
+          task.description?.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredTasks(filtered);
     },

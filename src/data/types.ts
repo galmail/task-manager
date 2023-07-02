@@ -8,6 +8,6 @@ export enum TaskType {
 export interface Task {
   id: number;
   name: string;
-  description: string;
+  description?: string;
   type: TaskType;
 }

@@ -30,7 +30,7 @@ function TopBar({
               <ArrowBackIosNewOutlinedIcon />
             </IconButton>
           )}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="h1" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
           {children}

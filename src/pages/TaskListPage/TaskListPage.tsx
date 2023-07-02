@@ -53,7 +53,9 @@ function TaskListPage() {
           data-testid="tasks-search-input"
         />
       </TopBar>
-      <TaskList tasks={filteredTasks} />
+      <div role="main">
+        <TaskList tasks={filteredTasks} />
+      </div>
     </>
   );
 }

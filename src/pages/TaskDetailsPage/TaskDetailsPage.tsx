@@ -29,7 +29,13 @@ function TaskDetailsPage({ onEditTask, onDeleteTask }: TaskDetailsPageProps) {
     <>
       <TopBar title="Task Details" canGoBack={true} />
       {task ? (
-        <TaskDetails task={task} onEdit={handleEdit} onDelete={handleDelete} />
+        <div role="main">
+          <TaskDetails
+            task={task}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        </div>
       ) : (
         <h3>Task Not Found</h3>
       )}

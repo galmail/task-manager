@@ -22,7 +22,7 @@ function TaskDetailsPage({ onEditTask, onDeleteTask }: TaskDetailsPageProps) {
 
   const handleDelete = useCallback(() => {
     onDeleteTask(task!);
-    navigate("/tasks");
+    navigate("/");
   }, [navigate, onDeleteTask, task]);
 
   return (

@@ -42,32 +42,28 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      children: [
-        {
-          path: "/",
-          element: <Navigate to="/tasks" />,
-        },
-        {
-          path: "/tasks",
-          element: <TaskListPage />,
-          loader: async () => tasks,
-        },
-        {
-          path: "/tasks/:id",
-          element: (
-            <TaskDetailsPage
-              onEditTask={handleEditTask}
-              onDeleteTask={handleDeleteTask}
-            />
-          ),
-          loader: async ({ params }) =>
-            tasks.find((task) => String(task.id) === params.id) ?? null,
-        },
-        {
-          path: "*",
-          element: <div>Page not found</div>,
-        },
-      ],
+      path: "/",
+      element: <Navigate to="/tasks" />,
+    },
+    {
+      path: "/tasks",
+      element: <TaskListPage />,
+      loader: async () => tasks,
+    },
+    {
+      path: "/tasks/:id",
+      element: (
+        <TaskDetailsPage
+          onEditTask={handleEditTask}
+          onDeleteTask={handleDeleteTask}
+        />
+      ),
+      loader: async ({ params }) =>
+        tasks.find((task) => String(task.id) === params.id) ?? null,
+    },
+    {
+      path: "*",
+      element: <div>Page not found</div>,
     },
   ]);
 
@@ -76,7 +72,12 @@ function App() {
   ) : loading ? (
     <div>Loading...</div>
   ) : (
-    <RouterProvider router={router} />
+    <RouterProvider
+      router={router}
+      fallbackElement={
+        <p>Something went wrong. Refresh the page or try again later.</p>
+      }
+    />
   );
 }
 

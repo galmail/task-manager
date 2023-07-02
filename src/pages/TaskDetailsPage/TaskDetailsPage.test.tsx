@@ -61,7 +61,7 @@ describe("TaskDetailsPage tests", () => {
     expect(taskNotFound).toBeInTheDocument();
   });
 
-  it("redirects to /tasks on delete", async () => {
+  it("can handle delete and redirects to tasks page", async () => {
     jest.spyOn(callbacks, "onDeleteTask");
 
     const loader = async () => tasks[0];
@@ -77,6 +77,27 @@ describe("TaskDetailsPage tests", () => {
     await userEvent.click(deleteButton);
 
     expect(callbacks.onDeleteTask).toHaveBeenCalledWith(tasks[0]);
-    expect(mockedUsedNavigate).toHaveBeenCalledWith("/tasks");
+    expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
+  });
+
+  it("can handle edit", async () => {
+    jest.spyOn(callbacks, "onEditTask");
+
+    const loader = async () => tasks[0];
+    render(
+      <RouterProvider
+        router={createMemoryRouter(routesWithLoader(loader), {
+          initialEntries: ["/tasks/1"],
+        })}
+      />
+    );
+
+    const editAndSaveButton = await screen.findByTestId("edit-button");
+    await userEvent.click(editAndSaveButton);
+    const nameTextfield = screen.getByTestId("task-name");
+    await userEvent.type(nameTextfield, "something else");
+    await userEvent.click(editAndSaveButton);
+
+    expect(callbacks.onEditTask).toHaveBeenCalled();
   });
 });

@@ -8,11 +8,6 @@ import tasksData from "../../__mocks__/tasks.json";
 import TaskDetailsPage from "./TaskDetailsPage";
 import type { Task } from "../../data/types";
 
-const wait = (ms: number) =>
-  new Promise((callback) => {
-    setTimeout(callback, ms);
-  });
-
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),

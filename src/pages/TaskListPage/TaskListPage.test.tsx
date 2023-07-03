@@ -1,16 +1,13 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 // eslint-disable-next-line jest/no-mocks-import
 import tasksData from "../../__mocks__/tasks.json";
 import type { Task } from "../../data/types";
 import TaskListPage from "./TaskListPage";
-import userEvent from "@testing-library/user-event";
 
-const wait = (ms: number) =>
-  new Promise((callback) => {
-    setTimeout(callback, ms);
-  });
+const wait = (ms: number) => new Promise((cb) => setTimeout(cb, ms));
 
 describe("TaskListPage tests", () => {
   const tasks = tasksData as Task[];

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
 
 // eslint-disable-next-line jest/no-mocks-import
 import tasksData from "../../__mocks__/tasks.json";
